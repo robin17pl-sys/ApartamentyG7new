@@ -43,18 +43,16 @@ export default function Footer() {
             </div>
           </div>
           
-          <div className="md:col-span-6 border-l border-border pl-10 h-full">
+          <div id="lokalizacja" className="md:col-span-6 border-l border-border pl-10 h-full">
              <h4 className="text-[9px] uppercase tracking-widest font-bold text-muted mb-6 italic">Lokalizacja</h4>
-             <div className="w-full h-64 bg-neutral-100 grayscale hover:grayscale-0 transition-all duration-700">
+              <div className="w-full h-64 bg-neutral-100 grayscale hover:grayscale-0 transition-all duration-700 overflow-hidden">
                <iframe 
                  width="100%" 
                  height="100%" 
-                 frameBorder="0" 
-                 scrolling="no" 
-                 marginHeight={0} 
-                 marginWidth={0} 
-                 src="https://maps.google.com/maps?q=Górna%207,%2041-608%20Świętochłowice&t=&z=15&ie=UTF8&iwloc=&output=embed"
-                 className="filter grayscale contrast-125"
+                 style={{ border: 0 }}
+                 src="https://maps.google.com/maps?q=ul.%20G%C3%B3rna%207%2C%20%C5%9Awi%C4%99toch%C5%82owice&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                 allowFullScreen
+                 loading="lazy"
                ></iframe>
              </div>
           </div>

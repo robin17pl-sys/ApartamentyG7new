@@ -3,7 +3,7 @@ import { MousePointer2, ChevronDown } from 'lucide-react';
 
 export default function Hero() {
   return (
-    <section className="relative h-screen min-h-[800px] flex items-center justify-center pt-24 px-10">
+    <section className="relative h-screen min-h-[700px] lg:min-h-[800px] flex items-center justify-center pt-40 lg:pt-24 px-10">
       <div className="max-w-7xl mx-auto w-full grid grid-cols-12 gap-10 items-center">
         {/* Left Content */}
         <motion.div
@@ -17,10 +17,10 @@ export default function Hero() {
             <span className="text-[10px] uppercase tracking-[0.3em] font-bold">Nasza Koncepcja</span>
           </div>
           <h1 className="text-5xl md:text-7xl text-primary font-serif mb-10 leading-[1.1]">
-            Niezakłócony <br /> Widok na Park
+            Niezakłócony <br /> Spokój
           </h1>
           <p className="text-muted text-lg md:text-xl italic font-serif leading-relaxed mb-12 max-w-md">
-            Doświadcz wyrafinowanego życia w siedmiu starannie zaprojektowanych apartamentach, gdzie architektoniczna precyzja spotyka się z kojącym spokojem natury.
+            Doświadcz wyrafinowanego życia w pięciu starannie zaprojektowanych apartamentach, gdzie architektoniczna precyzja spotyka się z kojącym spokojem natury.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4">
@@ -55,7 +55,7 @@ export default function Hero() {
           
           {/* Floating badge */}
           <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-muted p-4 flex flex-col justify-center items-center text-white text-center shadow-xl">
-            <span className="text-3xl font-serif">7</span>
+            <span className="text-3xl font-serif">5</span>
             <span className="text-[9px] uppercase tracking-widest opacity-70">GÓRNA</span>
           </div>
         </motion.div>

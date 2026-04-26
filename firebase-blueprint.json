@@ -1,0 +1,42 @@
+{
+  "entities": {
+    "Reservation": {
+      "title": "Reservation",
+      "description": "A booking reservation for an apartment.",
+      "type": "object",
+      "properties": {
+        "apartmentId": { "type": "string", "description": "ID of the apartment (e.g., '1', '2')" },
+        "apartmentName": { "type": "string", "description": "Name of the apartment" },
+        "checkIn": { "type": "string", "format": "date", "description": "Check-in date" },
+        "checkOut": { "type": "string", "format": "date", "description": "Check-out date" },
+        "guests": { "type": "string", "description": "Number of guests" },
+        "status": { "type": "string", "enum": ["pending", "confirmed", "cancelled"], "description": "Status of the reservation" },
+        "userId": { "type": "string", "description": "UID of the owner/requester" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Timestamp of creation" },
+        "customerName": { "type": "string", "description": "Name of the customer" },
+        "customerEmail": { "type": "string", "description": "Email of the customer" }
+      },
+      "required": ["apartmentId", "checkIn", "checkOut", "guests", "status", "userId", "createdAt"]
+    },
+    "Admin": {
+      "title": "Admin",
+      "description": "User with admin privileges.",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string" },
+        "role": { "type": "string", "enum": ["admin"] }
+      },
+      "required": ["email", "role"]
+    }
+  },
+  "firestore": {
+    "/reservations/{reservationId}": {
+      "schema": "Reservation",
+      "description": "Collection of all reservations."
+    },
+    "/admins/{userId}": {
+      "schema": "Admin",
+      "description": "Users with administrative rights."
+    }
+  }
+}

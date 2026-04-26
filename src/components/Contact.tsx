@@ -17,7 +17,7 @@ export default function Contact() {
               <span className="text-[10px] uppercase tracking-[0.3em] font-bold">Zapytania</span>
             </div>
             <h2 className="text-4xl md:text-5xl font-serif mb-12 text-primary">
-              Osobiste <br /> Wsparcie
+              Napisz <br /> do Nas
             </h2>
             
             <div className="space-y-10 mb-16">

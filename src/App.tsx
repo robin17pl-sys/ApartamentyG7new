@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { motion, useScroll, useSpring } from 'motion/react';
-import { useState } from 'react';
-import { Phone } from 'lucide-react';
+import { motion, useScroll, useSpring, AnimatePresence } from 'motion/react';
+import { useState, useEffect } from 'react';
+import { Phone, LayoutDashboard } from 'lucide-react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Apartments from './components/Apartments';
@@ -15,15 +15,28 @@ import Booking from './components/Booking';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import PhoneModal from './components/PhoneModal';
+import CRM from './components/CRM';
+import { auth } from './lib/firebase';
+import { onAuthStateChanged } from 'firebase/auth';
 
 export default function App() {
   const [isPhoneModalOpen, setIsPhoneModalOpen] = useState(false);
+  const [isCRMOpen, setIsCRMOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
     damping: 30,
     restDelta: 0.001
   });
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setIsAuthenticated(!!user);
+    });
+    return () => unsubscribe();
+  }, []);
 
   return (
     <div className="relative overflow-x-hidden">
@@ -54,19 +67,40 @@ export default function App() {
 
       <Footer />
 
-      {/* Floating Phone Trigger */}
-      <motion.button
-        initial={{ opacity: 0, scale: 0.5 }}
-        animate={{ opacity: 1, scale: 1 }}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
-        onClick={() => setIsPhoneModalOpen(true)}
-        className="fixed bottom-8 right-8 z-[100] w-14 h-14 bg-primary text-white flex items-center justify-center shadow-2xl hover:bg-black transition-colors"
-      >
-        <Phone className="w-5 h-5" />
-      </motion.button>
+      {/* Floating Actions */}
+      <div className="fixed bottom-8 right-8 z-[100] flex flex-col gap-4">
+        {isAuthenticated && (
+          <motion.button
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            onClick={() => setIsCRMOpen(true)}
+            className="w-14 h-14 bg-white border border-border text-primary flex items-center justify-center shadow-xl hover:bg-canvas transition-colors"
+            title="Panel Klienta / CRM"
+          >
+            <LayoutDashboard className="w-5 h-5" />
+          </motion.button>
+        )}
+
+        <motion.button
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ opacity: 1, scale: 1 }}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          onClick={() => setIsPhoneModalOpen(true)}
+          className="w-14 h-14 bg-primary text-white flex items-center justify-center shadow-2xl hover:bg-black transition-colors"
+          title="Kontakt telefoniczny"
+        >
+          <Phone className="w-5 h-5" />
+        </motion.button>
+      </div>
 
       <PhoneModal isOpen={isPhoneModalOpen} onClose={() => setIsPhoneModalOpen(false)} />
+      
+      <AnimatePresence>
+        {isCRMOpen && <CRM onClose={() => setIsCRMOpen(false)} />}
+      </AnimatePresence>
     </div>
   );
 }

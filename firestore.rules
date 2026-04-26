@@ -1,0 +1,53 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isValidReservation(data) {
+      return data.keys().hasAll(['apartmentId', 'apartmentName', 'checkIn', 'checkOut', 'guests', 'status', 'userId', 'createdAt']) &&
+             data.apartmentId is string && data.apartmentId.size() <= 64 &&
+             data.apartmentName is string && data.apartmentName.size() <= 128 &&
+             data.checkIn is string && data.checkIn.size() <= 32 &&
+             data.checkOut is string && data.checkOut.size() <= 32 &&
+             data.guests is string && data.guests.size() <= 64 &&
+             data.status in ['pending', 'confirmed', 'cancelled'] &&
+             data.userId == request.auth.uid &&
+             data.createdAt == request.time;
+    }
+
+    match /reservations/{reservationId} {
+      allow create: if isSignedIn() && isValidReservation(incoming());
+      allow get: if isSignedIn() && (resource.data.userId == request.auth.uid || isAdmin());
+      allow list: if isSignedIn() && (resource.data.userId == request.auth.uid || isAdmin());
+      allow update: if isSignedIn() && isAdmin() && incoming().diff(existing()).affectedKeys().hasOnly(['status']);
+      allow delete: if false;
+    }
+
+    match /admins/{userId} {
+      allow read: if isSignedIn() && (request.auth.uid == userId || isAdmin());
+      allow write: if false;
+    }
+  }
+}

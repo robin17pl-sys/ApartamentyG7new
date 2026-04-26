@@ -1,14 +1,61 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { Calendar, Users, Home, CheckCircle2 } from 'lucide-react';
+import { Calendar, Users, Home, CheckCircle2, Loader2 } from 'lucide-react';
+import { db, auth, loginWithGoogle } from '../lib/firebase';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
 export default function Booking() {
   const [success, setSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [checkIn, setCheckIn] = useState('');
+  const [checkOut, setCheckOut] = useState('');
+  const [apartment, setApartment] = useState('Apartament Nr 1');
+  const [guests, setGuests] = useState('1 Gość');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSuccess(true);
-    setTimeout(() => setSuccess(false), 5000);
+    setLoading(true);
+
+    try {
+      let user = auth.currentUser;
+      if (!user) {
+        user = await loginWithGoogle();
+      }
+
+      const reservationData = {
+        apartmentId: apartment.split(' ').pop() || '1',
+        apartmentName: apartment,
+        checkIn,
+        checkOut,
+        guests,
+        status: 'pending',
+        userId: user.uid,
+        createdAt: serverTimestamp(),
+        customerName: user.displayName || 'Anonim',
+        customerEmail: user.email || ''
+      };
+
+      await addDoc(collection(db, 'reservations'), reservationData);
+      
+      // Notify Admin via Email
+      try {
+        await fetch('/api/notify-admin', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(reservationData)
+        });
+      } catch (e) {
+        console.error("Email notification failed", e);
+      }
+      
+      setSuccess(true);
+      setTimeout(() => setSuccess(false), 5000);
+    } catch (error) {
+      console.error("Booking error:", error);
+      alert("Wystąpił błąd podczas rezerwacji. Spróbuj ponownie.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -54,6 +101,8 @@ export default function Booking() {
                 <input 
                   type="date" 
                   required
+                  value={checkIn}
+                  onChange={(e) => setCheckIn(e.target.value)}
                   className="w-full bg-transparent p-0 pb-2 text-sm border-b border-border focus:border-primary outline-none transition-colors rounded-none"
                 />
               </div>
@@ -62,6 +111,8 @@ export default function Booking() {
                 <input 
                   type="date" 
                   required
+                  value={checkOut}
+                  onChange={(e) => setCheckOut(e.target.value)}
                   className="w-full bg-transparent p-0 pb-2 text-sm border-b border-border focus:border-primary outline-none transition-colors rounded-none"
                 />
               </div>
@@ -70,7 +121,11 @@ export default function Booking() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
               <div className="space-y-3">
                 <label className="text-[9px] uppercase tracking-widest font-bold text-muted">Wybierz Apartament</label>
-                <select className="w-full bg-transparent p-0 pb-2 text-sm border-b border-border focus:border-primary outline-none appearance-none rounded-none cursor-pointer">
+                <select 
+                  value={apartment}
+                  onChange={(e) => setApartment(e.target.value)}
+                  className="w-full bg-transparent p-0 pb-2 text-sm border-b border-border focus:border-primary outline-none appearance-none rounded-none cursor-pointer"
+                >
                   <option>Apartament Nr 1</option>
                   <option>Apartament Nr 2</option>
                   <option>Apartament Nr 3</option>
@@ -80,20 +135,32 @@ export default function Booking() {
               </div>
               <div className="space-y-3">
                 <label className="text-[9px] uppercase tracking-widest font-bold text-muted">Goście</label>
-                <select className="w-full bg-transparent p-0 pb-2 text-sm border-b border-border focus:border-primary outline-none appearance-none rounded-none cursor-pointer">
-                  <option>1 Dorosły</option>
-                  <option>2 Dorosłych</option>
-                  <option>3 Dorosłych</option>
-                  <option>4 Dorosłych</option>
+                <select 
+                  value={guests}
+                  onChange={(e) => setGuests(e.target.value)}
+                  className="w-full bg-transparent p-0 pb-2 text-sm border-b border-border focus:border-primary outline-none appearance-none rounded-none cursor-pointer"
+                >
+                  <option>1 Gość</option>
+                  <option>2 Gości</option>
+                  <option>3 Gości</option>
+                  <option>4 Gości i więcej...</option>
                 </select>
               </div>
             </div>
 
             <button 
               type="submit"
-              className="w-full py-5 bg-primary text-white uppercase tracking-[0.4em] font-medium text-[11px] hover:bg-black transition-all duration-300"
+              disabled={loading}
+              className="w-full py-5 bg-primary text-white uppercase tracking-[0.4em] font-medium text-[11px] hover:bg-black transition-all duration-300 flex items-center justify-center gap-3 disabled:opacity-50"
             >
-              Zapytaj o Pobyt
+              {loading ? (
+                <>
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  Wysyłanie...
+                </>
+              ) : (
+                'Zapytaj o Pobyt'
+              )}
             </button>
           </form>
         </div>

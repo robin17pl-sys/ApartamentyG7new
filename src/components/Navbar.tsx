@@ -1,19 +1,30 @@
-import { motion } from 'motion/react';
-import { Menu, X, Phone } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
+import { Menu, X, Phone, User, LayoutDashboard } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import PhoneModal from './PhoneModal';
+import { auth, loginWithGoogle } from '../lib/firebase';
+import { onAuthStateChanged } from 'firebase/auth';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [isPhoneModalOpen, setIsPhoneModalOpen] = useState(false);
+  const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
     };
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    
+    const unsubscribe = onAuthStateChanged(auth, (u) => {
+      setUser(u);
+    });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      unsubscribe();
+    };
   }, []);
 
   const navLinks = [
@@ -54,6 +65,20 @@ export default function Navbar() {
             </a>
           ))}
           <div className="flex items-center gap-6">
+            {user ? (
+              <div className="flex items-center gap-4 text-primary">
+                <span className="text-[10px] uppercase tracking-widest font-bold opacity-60">Witaj, {user.displayName?.split(' ')[0]}</span>
+              </div>
+            ) : (
+              <button 
+                onClick={() => loginWithGoogle()}
+                className="text-primary hover:text-muted transition-colors flex items-center gap-2"
+                title="Zaloguj się"
+              >
+                <User className="w-4 h-4" />
+                <span className="text-[10px] uppercase tracking-widest font-bold">Zaloguj</span>
+              </button>
+            )}
             <button 
               onClick={() => setIsPhoneModalOpen(true)}
               className="text-primary hover:text-muted transition-colors"
