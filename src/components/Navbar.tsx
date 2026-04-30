@@ -37,18 +37,18 @@ export default function Navbar() {
   return (
     <nav 
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
-        scrolled ? 'bg-canvas/95 backdrop-blur-md py-4' : 'bg-transparent py-8'
+        scrolled ? 'bg-canvas/95 backdrop-blur-md py-3 sm:py-4' : 'bg-transparent py-4 sm:py-8'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-10 flex justify-between items-end border-b border-border pb-4">
+      <div className="max-w-7xl mx-auto px-6 sm:px-10 flex justify-between items-end border-b border-border pb-3 sm:pb-4">
         <motion.a 
           href="#" 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           className="flex flex-col gap-0 group"
         >
-          <span className="text-[10px] uppercase tracking-[0.3em] font-semibold text-muted">Apartamenty Premium</span>
-          <span className="text-2xl font-serif text-primary leading-tight">
+          <span className="text-[8px] sm:text-[10px] uppercase tracking-[0.3em] font-semibold text-muted">Apartamenty Premium</span>
+          <span className="text-lg sm:text-2xl font-serif text-primary leading-tight">
             INTERMO GÓRNA 7
           </span>
         </motion.a>

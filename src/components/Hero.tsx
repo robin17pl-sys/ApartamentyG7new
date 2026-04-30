@@ -3,27 +3,27 @@ import { MousePointer2, ChevronDown } from 'lucide-react';
 
 export default function Hero() {
   return (
-    <section className="relative h-screen min-h-[700px] lg:min-h-[800px] flex items-center justify-center pt-40 lg:pt-24 px-10">
-      <div className="max-w-7xl mx-auto w-full grid grid-cols-12 gap-10 items-center">
+    <section className="relative h-screen min-h-[600px] lg:min-h-[800px] flex items-center justify-center pt-32 sm:pt-40 lg:pt-24 px-6 sm:px-10">
+      <div className="max-w-7xl mx-auto w-full grid grid-cols-12 gap-6 lg:gap-10 items-center">
         {/* Left Content */}
         <motion.div
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1, ease: "easeOut" }}
-          className="col-span-12 lg:col-span-5 z-10"
+          className="col-span-12 lg:col-span-5 z-10 text-center lg:text-left"
         >
-          <div className="flex items-center gap-2 mb-8">
-            <span className="w-10 h-[1px] bg-primary"></span>
-            <span className="text-[10px] uppercase tracking-[0.3em] font-bold">Nasza Koncepcja</span>
+          <div className="flex items-center justify-center lg:justify-start gap-2 mb-6 sm:mb-8">
+            <span className="w-8 sm:w-10 h-[1px] bg-primary"></span>
+            <span className="text-[9px] sm:text-[10px] uppercase tracking-[0.3em] font-bold">Nasza Koncepcja</span>
           </div>
-          <h1 className="text-5xl md:text-7xl text-primary font-serif mb-10 leading-[1.1]">
-            Niezakłócony <br /> Spokój
+          <h1 className="text-4xl sm:text-5xl md:text-7xl text-primary font-serif mb-6 sm:mb-10 leading-[1.2] lg:leading-[1.1]">
+            Niezakłócony <br className="hidden sm:block" /> Spokój
           </h1>
-          <p className="text-muted text-lg md:text-xl italic font-serif leading-relaxed mb-12 max-w-md">
+          <p className="text-muted text-base sm:text-lg md:text-xl italic font-serif leading-relaxed mb-8 sm:mb-12 max-w-md mx-auto lg:mx-0">
             Doświadcz wyrafinowanego życia w pięciu starannie zaprojektowanych apartamentach, gdzie architektoniczna precyzja spotyka się z kojącym spokojem natury.
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
             <a 
               href="#apartments"
               className="px-10 py-5 bg-primary text-white uppercase tracking-widest text-[11px] hover:bg-black transition-colors text-center"
@@ -42,14 +42,14 @@ export default function Hero() {
         >
           <div className="absolute inset-0 bg-neutral-200 overflow-hidden rounded-sm">
             <img 
-              src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80&w=2070" 
-              alt="Luxury Apartment View" 
+              src="https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?auto=format&fit=crop&q=80&w=2070" 
+              alt="Intermo Górna 7 Facade" 
               className="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 transition-all duration-700"
               referrerPolicy="no-referrer"
             />
             <div className="absolute inset-0 bg-black/10" />
             <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center pointer-events-none">
-              <span className="text-white opacity-10 text-[20vw] font-serif select-none leading-none">01</span>
+              <span className="text-white opacity-10 text-[20vw] font-serif select-none leading-none">G7</span>
             </div>
           </div>
           

@@ -51,16 +51,16 @@ const apartments = [
 
 export default function Apartments() {
   return (
-    <section id="apartments" className="py-24 px-10 bg-canvas overflow-hidden">
+    <section id="apartments" className="py-20 sm:py-24 px-6 sm:px-10 bg-canvas overflow-hidden">
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-16 sm:mb-20 gap-8">
           <div className="max-w-2xl">
             <div className="flex items-center gap-2 mb-4">
-              <span className="w-10 h-[1px] bg-primary"></span>
-              <span className="text-[10px] uppercase tracking-[0.3em] font-bold">Wyselekcjonowane Przestrzenie</span>
+              <span className="w-8 sm:w-10 h-[1px] bg-primary"></span>
+              <span className="text-[9px] sm:text-[10px] uppercase tracking-[0.3em] font-bold">Wyselekcjonowane Przestrzenie</span>
             </div>
-            <h2 className="text-4xl md:text-5xl text-primary font-serif leading-tight">
-              Pięć Wyjątkowych <br /> Prywatnych Rezydencji
+            <h2 className="text-3xl sm:text-4xl md:text-5xl text-primary font-serif leading-tight">
+              Pięć Wyjątkowych <br className="hidden sm:block" /> Prywatnych Rezydencji
             </h2>
           </div>
           <p className="text-muted max-w-sm text-sm leading-relaxed italic font-serif">
@@ -68,7 +68,7 @@ export default function Apartments() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 lg:gap-x-10 gap-y-12 lg:gap-y-16">
           {apartments.map((apt, index) => (
             <motion.div
               key={apt.id}

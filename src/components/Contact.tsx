@@ -3,9 +3,9 @@ import { Send, MapPin, Phone, Mail, Instagram, Facebook } from 'lucide-react';
 
 export default function Contact() {
   return (
-    <section id="contact" className="py-32 px-10 bg-canvas">
+    <section id="contact" className="py-20 sm:py-32 px-6 sm:px-10 bg-canvas">
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -13,14 +13,14 @@ export default function Contact() {
             transition={{ duration: 0.8 }}
           >
             <div className="flex items-center gap-2 mb-6">
-              <span className="w-10 h-[1px] bg-primary"></span>
-              <span className="text-[10px] uppercase tracking-[0.3em] font-bold">Zapytania</span>
+              <span className="w-8 sm:w-10 h-[1px] bg-primary"></span>
+              <span className="text-[9px] sm:text-[10px] uppercase tracking-[0.3em] font-bold">Zapytania</span>
             </div>
-            <h2 className="text-4xl md:text-5xl font-serif mb-12 text-primary">
-              Napisz <br /> do Nas
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif mb-8 sm:mb-12 text-primary">
+              Napisz <br className="hidden sm:block" /> do Nas
             </h2>
             
-            <div className="space-y-10 mb-16">
+            <div className="space-y-8 sm:y-10 mb-12 sm:mb-16">
               {[
                 { label: 'Biuro', value: 'ul. Górna 7, 41-608 Świętochłowice' },
                 { label: 'Rezerwacje', value: '+48 512 292 332' },

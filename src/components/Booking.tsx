@@ -59,17 +59,17 @@ export default function Booking() {
   };
 
   return (
-    <section id="booking" className="py-32 px-10 bg-canvas">
+    <section id="booking" className="py-20 sm:py-32 px-6 sm:px-10 bg-canvas">
       <div className="max-w-4xl mx-auto">
-        <div className="bg-white p-12 shadow-sm border border-border relative overflow-hidden">
+        <div className="bg-white p-8 sm:p-12 shadow-sm border border-border relative overflow-hidden">
           
-          <div className="relative z-10 text-center mb-16">
+          <div className="relative z-10 text-center mb-12 sm:mb-16">
             <div className="inline-flex items-center gap-2 mb-4 text-muted mx-auto">
               <span className="w-6 h-[1px] bg-muted"></span>
-              <span className="text-[10px] uppercase tracking-[0.3em] font-bold">Rezerwacje</span>
+              <span className="text-[9px] sm:text-[10px] uppercase tracking-[0.3em] font-bold">Rezerwacje</span>
               <span className="w-6 h-[1px] bg-muted"></span>
             </div>
-            <h2 className="text-4xl font-serif text-primary">Sprawdź Dostępność</h2>
+            <h2 className="text-3xl sm:text-4xl font-serif text-primary">Sprawdź Dostępność</h2>
           </div>
 
           {success && (

@@ -56,13 +56,13 @@ export default function CRM({ onClose }: { onClose: () => void }) {
       exit={{ opacity: 0 }}
       className="fixed inset-0 z-[120] bg-canvas flex flex-col"
     >
-      <nav className="h-20 border-b border-border px-10 flex items-center justify-between bg-white">
+      <nav className="h-20 border-b border-border px-4 sm:px-10 flex items-center justify-between bg-white">
         <div className="flex items-center gap-4">
           <LayoutDashboard className="w-5 h-5 text-primary" />
-          <h2 className="text-xl font-serif text-primary">Panel Zarządzania</h2>
+          <h2 className="text-lg sm:text-xl font-serif text-primary">Panel Zarządzania</h2>
         </div>
-        <div className="flex items-center gap-6">
-          <div className="text-right">
+        <div className="flex items-center gap-3 sm:gap-6">
+          <div className="text-right hidden sm:block">
             <p className="text-[10px] uppercase tracking-widest font-bold text-muted">Zalogowany jako</p>
             <p className="text-xs font-serif italic text-primary">{auth.currentUser.email}</p>
           </div>
@@ -75,26 +75,26 @@ export default function CRM({ onClose }: { onClose: () => void }) {
           </button>
           <button 
             onClick={onClose}
-            className="px-6 py-2 border border-border text-[10px] uppercase tracking-widest hover:bg-canvas transition-colors"
+            className="px-4 sm:px-6 py-2 border border-border text-[10px] uppercase tracking-widest hover:bg-canvas transition-colors"
           >
             Zamknij
           </button>
         </div>
       </nav>
 
-      <main className="flex-1 overflow-y-auto p-10">
+      <main className="flex-1 overflow-y-auto p-4 sm:p-10">
         <div className="max-w-6xl mx-auto">
-          <div className="flex justify-between items-end mb-12">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-8 sm:mb-12 gap-6">
             <div>
-              <h3 className="text-3xl font-serif text-primary mb-2">Rezerwacje</h3>
+              <h3 className="text-2xl sm:text-3xl font-serif text-primary mb-2">Rezerwacje</h3>
               <p className="text-muted text-sm italic font-serif">Zarządzaj zapytaniami o pobyt w Intermo Górna 7.</p>
             </div>
-            <div className="flex gap-4">
-               <div className="bg-white border border-border px-6 py-3 text-center">
+            <div className="flex gap-4 w-full sm:w-auto">
+               <div className="flex-1 sm:flex-initial bg-white border border-border px-4 sm:px-6 py-3 text-center">
                  <p className="text-[10px] uppercase tracking-widest text-muted mb-1">Wszystkie</p>
                  <p className="text-xl font-serif">{reservations.length}</p>
                </div>
-               <div className="bg-white border border-border px-6 py-3 text-center">
+               <div className="flex-1 sm:flex-initial bg-white border border-border px-4 sm:px-6 py-3 text-center">
                  <p className="text-[10px] uppercase tracking-widest text-muted mb-1">Oczekujące</p>
                  <p className="text-xl font-serif text-amber-600">{reservations.filter(r => r.status === 'pending').length}</p>
                </div>
@@ -106,15 +106,15 @@ export default function CRM({ onClose }: { onClose: () => void }) {
               <Loader2 className="w-8 h-8 animate-spin text-muted" />
             </div>
           ) : (
-            <div className="grid grid-cols-1 gap-6">
+            <div className="grid grid-cols-1 gap-4 sm:gap-6">
               {reservations.map((res) => (
                 <motion.div 
                   key={res.id}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="bg-white border border-border p-8 flex flex-col md:flex-row justify-between items-start md:items-center group hover:border-primary transition-colors"
+                  className="bg-white border border-border p-6 sm:p-8 flex flex-col md:flex-row justify-between items-start md:items-center group hover:border-primary transition-colors"
                 >
-                  <div className="flex-1">
+                  <div className="flex-1 w-full">
                     <div className="flex items-center gap-3 mb-2">
                        <span className={`w-2 h-2 rounded-full ${
                          res.status === 'confirmed' ? 'bg-green-500' : 
@@ -125,7 +125,7 @@ export default function CRM({ onClose }: { onClose: () => void }) {
                        </span>
                     </div>
                     <h4 className="text-xl font-serif text-primary mb-4">{res.apartmentName}</h4>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8">
                        <div>
                          <p className="text-[9px] uppercase tracking-widest text-muted mb-1">Gość</p>
                          <p className="text-sm font-serif italic text-primary">{res.customerName}</p>
@@ -138,25 +138,25 @@ export default function CRM({ onClose }: { onClose: () => void }) {
                          <p className="text-[9px] uppercase tracking-widest text-muted mb-1">Osoby</p>
                          <p className="text-sm font-serif italic text-primary">{res.guests}</p>
                        </div>
-                       <div>
+                       <div className="truncate">
                          <p className="text-[9px] uppercase tracking-widest text-muted mb-1">E-mail</p>
-                         <p className="text-sm font-serif italic text-primary">{res.customerEmail}</p>
+                         <p className="text-sm font-serif italic text-primary truncate">{res.customerEmail}</p>
                        </div>
                     </div>
                   </div>
 
                   {isAdmin && res.status === 'pending' && (
-                    <div className="flex gap-2 mt-6 md:mt-0 md:ml-10">
+                    <div className="flex gap-2 mt-6 md:mt-0 md:ml-10 w-full sm:w-auto">
                       <button 
                         onClick={() => updateStatus(res.id, 'confirmed')}
-                        className="bg-primary text-white p-3 hover:bg-black transition-colors"
+                        className="flex-1 sm:flex-initial bg-primary text-white p-3 hover:bg-black transition-colors flex justify-center"
                         title="Potwierdź"
                       >
                         <Check className="w-5 h-5" />
                       </button>
                       <button 
                         onClick={() => updateStatus(res.id, 'cancelled')}
-                        className="border border-border text-primary p-3 hover:bg-canvas transition-colors"
+                        className="flex-1 sm:flex-initial border border-border text-primary p-3 hover:bg-canvas transition-colors flex justify-center"
                         title="Anuluj"
                       >
                         <X className="w-5 h-5" />

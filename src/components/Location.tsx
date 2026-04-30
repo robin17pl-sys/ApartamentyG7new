@@ -26,20 +26,20 @@ const locationFeatures = [
 
 export default function Location() {
   return (
-    <section id="location" className="py-32 px-10 bg-canvas overflow-hidden border-t border-border">
+    <section id="location" className="py-20 sm:py-32 px-6 sm:px-10 bg-canvas overflow-hidden border-t border-border">
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-20 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-start">
           <div className="lg:col-span-5">
             <div className="flex items-center gap-2 mb-6 text-muted">
-              <span className="w-10 h-[1px] bg-muted"></span>
-              <span className="text-[10px] uppercase tracking-[0.3em] font-bold">Otoczenie</span>
+              <span className="w-8 sm:w-10 h-[1px] bg-muted"></span>
+              <span className="text-[9px] sm:text-[10px] uppercase tracking-[0.3em] font-bold">Otoczenie</span>
             </div>
-            <h2 className="text-4xl md:text-5xl text-primary font-serif mb-10 leading-tight">Pierwsza Linia <br /> Natury</h2>
-            <p className="text-muted text-lg mb-16 leading-relaxed italic font-serif">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl text-primary font-serif mb-8 sm:mb-10 leading-tight">Pierwsza Linia <br className="hidden sm:block" /> Natury</h2>
+            <p className="text-muted text-base sm:text-lg mb-12 sm:mb-16 leading-relaxed italic font-serif">
                Rzadkie połączenie wielkomiejskiego życia z ciszą natury, oferowane wyłącznie dzięki naszemu bezpośredniemu sąsiedztwu z centralnym parkiem.
             </p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 sm:gap-10">
               {locationFeatures.map((item, i) => (
                 <div key={i} className="border-l border-border pl-6 py-2">
                   <div className="text-[10px] uppercase tracking-widest text-muted mb-2 font-bold">{item.title}</div>
